@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+   <meta charset="UTF-8">
+   <title>Adicionar Destinos</title>
+</head>
+   
+<body>
+<h2>Cadastro do Destino</h2>
+<form th:action="@{/destinos/save}" th:object="${destino}" method="post">
+
+<div>
+<label for="nome"> Nome: </label>
+</div>
+</body>
+
+</html>
