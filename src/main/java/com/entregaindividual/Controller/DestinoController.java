@@ -3,68 +3,67 @@ package com.entregaindividual.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.entregaindividual.DestinoDTO.DestinoDTO;
 import com.entregaindividual.Model.Destino;
 import com.entregaindividual.Services.DestinoServices;
+import com.entregaindividual.repositories.DestinoRepository;
 
 
-@Controller
-@RequestMapping("/destino")
+
+@RestController
+@RequestMapping("/destinos")
 public class DestinoController {
 
 	@Autowired
-	private DestinoServices destinoServices;
-
-	@GetMapping
-	public String listDestino(Model model) {
-	    List<Destino> destino = destinoServices.GetAllDestino();
-	    model.addAttribute("destino", destino);
-	    return "ListarDestino";
-	}
-
-	// Formulário de criação
-	@GetMapping("/form")
-	public String formAdd(Model model) {
-	    Destino destino = new Destino();
-	    model.addAttribute("destino", destino);
-	    return "destinoForm";
-	}
-
+	private DestinoServices ds;
 	
-	//persistencia de criação
-	@PostMapping ("/save")
-	public String saveDestino(@ModelAttribute Destino destino) {
-		destinoServices.saveDestino(destino);
-		return "redirect:/destinos";
+	@Autowired
+	private DestinoRepository dr;
+	
+	@PostMapping("/savedestino")
+	public Destino createDestino(@RequestBody Destino destinoDto) {
+		
+		
+		
+		return ds.saveDestino(destinoDto);
 	}
 	
-	//formulario de edição
-	@PostMapping("editar/{id}")
-	public String FormUpdate(@PathVariable Long id, Model model) {
-		Destino destino = destinoServices.getDestinoById(id);
-		model.addAttribute("destino", destino);
-		return "editarDestino";
+	@GetMapping("/alldestinos")
+	public List<Destino> getAllDestino(){
+		
+		return ds.GetAllDestino();
+		
 	}
 	
-	//persistencia da edição
-	@PutMapping("/editar/{id}")
-	public String updateDestino(@PathVariable Long id, @ModelAttribute
-	Destino destino) {
-		destinoServices.updateDestino(id, destino);
-		return "redirect:/destinos";
+	@GetMapping("/{id}")
+	public ResponseEntity<Destino>getDestinoById(@PathVariable Long id){
+		Destino destino = ds.getDestinoById(id);
+		
+		return ResponseEntity.ok(destino);
 	}
-	//excluir destino
-	@GetMapping("/deletar/{id}")
-	public String deleteDestino(@PathVariable Long id) {
-		destinoServices.deleteDestino(id);
-		return "redirect:/destino";
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Destino> uptadeDestino(@PathVariable Long destino_id, @RequestBody DestinoDTO destinoDTOUpdate){
+		Destino destino = ds.getDestinoById(destino_id);
+	
+		ds.updateDestino(destino_id, destinoDTOUpdate);
+		
+		return ResponseEntity.ok(destino);
+		
+	}
+	
+	@DeleteMapping("/{destino_id}")
+	public void deleteDestino(@PathVariable Long destino_id) {
+		ds.deleteDestino(destino_id);
 	}
 }
