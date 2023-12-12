@@ -17,9 +17,9 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long usuario_id;
 	
-	@Column(nullable = false,length = 200)
+	@Column(nullable = false, length = 200)
 	private String nome;
 
 	@Column(nullable = false, length = 11, unique = true)
@@ -34,8 +34,8 @@ public class Usuario {
 	@Column(nullable = false,length = 200)
 	private String senha;
 	
-	@Column (nullable = true != false)
-	private boolean genero;
+	@Column (nullable =  false, length = 200)
+	private String genero;
 
 	
 	@ManyToMany(mappedBy = "usuarios")
@@ -45,26 +45,19 @@ public class Usuario {
 		super();
 	}
 	
-public Usuario(Long id, String nome, String cpf, String email, String celular, String senha, boolean genero) {
-	super();
-	this.id = id;
-	this.nome = nome;
-	this.cpf = cpf;
-	this.email = email;
-	this.celular = celular;
-	this.senha = senha;
-	this.genero = genero;
-}
+
+
+public Long getUsuario_id() {
+		return usuario_id;
+	}
 
 
 
-public Long getId() {
-	return id;
-}
+	public void setUsuario_id(Long usuario_id) {
+		this.usuario_id = usuario_id;
+	}
 
-public void setId(Long id) {
-	this.id = id;
-}
+
 
 public String getNome() {
 	return nome;
@@ -106,9 +99,7 @@ public void setSenha(String senha) {
 	this.senha = senha;
 }
 
-public boolean isGenero() {
-	return genero;
-}
+
 
 public Set<Destino> getDestinos() {
 	return destinos;
@@ -118,9 +109,15 @@ public void setDestinos(Set<Destino> destinos) {
 	this.destinos = destinos;
 }
 
-public void setGenero(boolean genero) {
+public String getGenero() {
+	return genero;
+}
+
+public void setGenero(String genero) {
 	this.genero = genero;
 }
+
+
 
 
 

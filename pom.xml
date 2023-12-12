@@ -8,7 +8,7 @@
 		<version>3.2.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.entrega-petshop</groupId>
+	<groupId>com.entrega-entrega-modulo-5</groupId>
 	<artifactId>projeto-modulo-5</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>entrega-modulo-5</name>
@@ -21,10 +21,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+    <groupId>javax.xml.bind</groupId>
+    <artifactId>jaxb-api</artifactId>
+    <version>2.3.1</version> <!-- Use the latest version available -->
+	</dependency>
+	
+
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -37,6 +42,13 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.0.3</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
@@ -59,11 +71,19 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+			<dependency>
+    <groupId>javax.xml.bind</groupId>
+    <artifactId>jaxb-api</artifactId>
+    <version>2.3.1</version> <!-- Use the latest version available -->
+	</dependency>
+
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+    <groupId>org.modelmapper</groupId>
+    <artifactId>modelmapper</artifactId>
+    <version>3.2.0</version>
+</dependency>
+	
 	</dependencies>
 
 	<build>

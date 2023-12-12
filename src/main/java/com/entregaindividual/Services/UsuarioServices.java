@@ -1,8 +1,13 @@
 package com.entregaindividual.Services;
 
 import java.util.List;
+import java.util.Objects;
+
+
+
 
 import com.entregaindividual.Model.Usuario;
+
 
 public interface UsuarioServices {
 
@@ -15,6 +20,15 @@ public interface UsuarioServices {
 	Usuario updateUsuario( Long id, Usuario usuarioAtualizado);
 	
 	void deleteUsuario(Long id);
+
+	void addRelationship(Long destinoId, Long usuarioId);
+
+	List<Objects> findAllRels();
+
+	
+
+
+	
 	
 	
 	

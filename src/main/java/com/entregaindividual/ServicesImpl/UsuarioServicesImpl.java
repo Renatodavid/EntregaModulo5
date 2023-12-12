@@ -1,13 +1,15 @@
 package com.entregaindividual.ServicesImpl;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.entregaindividual.Model.Destino;
 import com.entregaindividual.Model.Usuario;
 import com.entregaindividual.Services.UsuarioServices;
+import com.entregaindividual.repositories.DestinoRepository;
 import com.entregaindividual.repositories.UsuarioRepository;
 
 
@@ -15,38 +17,41 @@ import com.entregaindividual.repositories.UsuarioRepository;
 
 
 @Service
-public class UsuarioServicesImpl implements UsuarioServices {
+public  class UsuarioServicesImpl implements UsuarioServices {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioRepository ur;
+	
+
+	private DestinoRepository dr;
+	
 	
 	@Override
 	public List<Usuario> GetAllUsuarios() {
-		return usuarioRepository.findAll();
+		return ur.findAll();
 	}
 
 	@Override
 	public Usuario getUsuarioById(Long id) {
-		return usuarioRepository.findById(id).orElseThrow(()-> new RuntimeException("Id:" + id + "not Found"));
+		return ur.findById(id).orElseThrow(()-> new RuntimeException("Id:" + id + "not Found"));
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public Usuario saveUsuario(Usuario usuario) {
-		return usuarioRepository.save(usuario);
+		return ur.save(usuario);
 	}
-
+ 
 	@Override
 	public Usuario updateUsuario(Long id, Usuario usuarioAtualizado) {
-		Usuario usuarioExistente = usuarioRepository.findById(id).orElseThrow(()-> new RuntimeException("Id:" + id + "not Found"));
-		if (usuarioExistente != null) {
-			usuarioExistente.setNome(usuarioAtualizado.getNome());
-			usuarioExistente.setCpf(usuarioAtualizado.getCpf());
-			usuarioExistente.setCelular(usuarioAtualizado.getCelular());
-			usuarioExistente.setEmail(usuarioAtualizado.getEmail());
-			usuarioExistente.setSenha(usuarioAtualizado.getSenha());
-			usuarioExistente.setGenero(usuarioAtualizado.isGenero());
-			return usuarioRepository.save(usuarioExistente);
+		Usuario usuario = ur.findById(id).orElseThrow(()-> new RuntimeException("Id:" + id + "not Found"));
+		if (usuario != null) {
+			usuario.setNome(usuarioAtualizado.getNome());
+			usuario.setCpf(usuarioAtualizado.getCpf());
+			usuario.setCelular(usuarioAtualizado.getCelular());
+			usuario.setEmail(usuarioAtualizado.getEmail());
+			usuario.setSenha(usuarioAtualizado.getSenha());
+			usuario.setGenero(usuarioAtualizado.getGenero());
+			return ur.save(usuario);
 		}else {
 			throw new RuntimeException("Usuario com o ID " + id + "não encontrado. ");
 		}
@@ -56,7 +61,42 @@ public class UsuarioServicesImpl implements UsuarioServices {
 	@Override
 	public void deleteUsuario(Long id) {
 		
-		usuarioRepository.deleteById(id);
+		ur.deleteById(id);
 	}
 
-}
+
+	@Override
+	public List<Objects> findAllRels() {
+		
+		return null;
+	}
+
+	@Override
+	public void addRelationship(Long usuarioId, Long destinoId) {
+		Usuario usuario = ur.findById(usuarioId).orElseThrow(() -> new RuntimeException("ID: " + usuarioId + "Not Found"));
+		Destino destino = dr.findById(destinoId).orElseThrow(() -> new RuntimeException("ID: " + destinoId + "Not Found"));
+		
+		if(destino != null && usuario != null) {
+			destino.getUsuarios().add(destino);
+			usuario.getDestinos().add(destino);
+			
+			dr.save(destino);
+			ur.save(usuario);
+			
+		}
+		
+	}
+	
+	}
+
+	
+	
+
+
+
+	
+
+
+  
+    
+

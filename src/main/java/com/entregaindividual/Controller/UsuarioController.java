@@ -3,58 +3,64 @@ package com.entregaindividual.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.entregaindividual.Model.Usuario;
 import com.entregaindividual.Services.UsuarioServices;
 
-@Controller
+
+
+@RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
 	
 
-	
 	@Autowired
-	private UsuarioServices UsuarioServices;
+	private UsuarioServices us;
 	
-
-	
-	//Home usuario
-	@GetMapping("home/{id}")
-	public String listaUsuario (@PathVariable Long id, Model model) {
-		Usuario usuarioLocalizado = UsuarioServices.getUsuarioById(id);
-		model.addAttribute("usuario", usuarioLocalizado);
-		return"homeusuario";
+	@PostMapping("/saveusuario")
+	public Usuario createUsuario(@RequestBody Usuario usuario) {
+		return us.saveUsuario(usuario);
 	}
 	
-	//Visualizar destino 
-	@GetMapping("/visualiar/{id}")
-	public String visualizarCompra(Model model) {
-		List<Usuario>localizarUsuario = UsuarioServices.GetAllUsuarios();
-		model.addAttribute("usuario", localizarUsuario);
-		return "visualizarCompra";
+	@GetMapping("/allusuario")
+	public List<Usuario> getAllUsuario(){
+		return us.GetAllUsuarios();
 	}
 	
-	//perfil do usuario
-	@GetMapping("/profile/{id}")
-	public String perfilUsuario(@PathVariable Long id, Model model) {
+	@GetMapping("/{id}")
+	public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id){
+		Usuario usuario = us.getUsuarioById(id);
 		
-		Usuario usuario = UsuarioServices.getUsuarioById(id);
-		model.addAttribute("usuario", usuario);
-		return "userprofile";
+		return ResponseEntity.ok(usuario);
 	}
 	
-	//formulario de cadastro
-	
-	public String formCadastroUsuario(Model model) {
-		Usuario usuario = new Usuario();
-		model.addAttribute("usuario", usuario);
-		return "cadastro";
+	@PutMapping("/{id}")
+	public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioUpdate){
+		Usuario usuario = us.getUsuarioById(id);
+		
+		usuario.setUsuario_id(usuarioUpdate.getUsuario_id());
+		usuario.setNome(usuarioUpdate.getNome());
+		usuario.setCpf(usuarioUpdate.getCpf());
+		usuario.setEmail(usuarioUpdate.getEmail());
+		usuario.setCelular(usuarioUpdate.getCelular());
+		usuario.setSenha(usuarioUpdate.getSenha());
+		usuario.setGenero(usuarioUpdate.getGenero());
+		
+		return ResponseEntity.ok(usuario);
+		
 	}
 	
-	
+	@DeleteMapping("/{id}")
+	public void deleteUsuario(@PathVariable Long id) {
+		us.deleteUsuario(id);
+	}
 }
