@@ -1,5 +1,5 @@
 #   Projeto FullStack produzido para a RECODE PRO 2023. 
-Projeto desenvolvido em SPRING-TOOL utilizando Spring Boot e modelado em MVC
+Projeto desenvolvido em SPRING-TOOL utilizando o modelo do padrão em MVC
 <h2>Tecnologias utilizadas </h2>
 
 <div style="display: inline_block" align="center"><br>
