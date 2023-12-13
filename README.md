@@ -6,6 +6,10 @@ Projeto desenvolvido em SPRING-TOOL
 
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="40" height="40"/>
 
+
+![swagger](https://github.com/Renatodavid/EntregaModulo5/assets/106851081/069c9afa-c6e0-487b-9b85-7f0361ce9151)
+
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Spring_Framework_Logo_2018.svg" width="150" height="50" /> 
 </div>
 
